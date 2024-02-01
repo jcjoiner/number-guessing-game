@@ -13,19 +13,27 @@ import os
 
 # game loop
 def game_loop():
+    os.system("clear")
     rand_int = random.randint(0, 100)
     attempts = 0
     max_attempts = 5
 
     while attempts < max_attempts:
+
         attempts += 1
 
         print(f"Attempt: {attempts} of {max_attempts}")
-        try:
-            guess = int(input("Enter a guess: "))
-        except ValueError:
-            print("Integers only. Try again.")
-            guess = int(input("Enter a guess: "))
+       
+        while True:
+            try:
+                guess = int(input("Enter a guess: "))
+                if guess < 0:
+                   print("Numbers cannot be less than 0. Try again.")
+                else:
+                    break
+            except ValueError:
+                print("Integers only. Try again.")
+
         print("========================================")
        
         if guess == rand_int:
@@ -40,17 +48,16 @@ def game_loop():
             print(f"Lower than {guess}! Guess again!")
 
 def main():
-    game_loop()
 
     while True:
+        game_loop()
+
         choice = input("Would you like to play again? (Y/N)\n> ").upper()
-        
-        if choice == "Y":
-            os.system("clear")
-            game_loop()
-        else:
+
+        if choice != "Y":
             print("Thanks for playing!")
             time.sleep(1)
+            os.system("clear")
             quit()
 
 main()
